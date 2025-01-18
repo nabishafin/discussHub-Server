@@ -31,7 +31,7 @@ async function run() {
         postsDB = client.db("DiscussHubDB").collection("posts");
         announcementDB = client.db("DiscussHubDB").collection("announcement");
 
-        // Ping MongoDB to confirm the connection
+
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
@@ -191,7 +191,7 @@ async function run() {
     }
 }
 
-// Initialize the connection and run the app
+
 run();
 
 // Default route for testing the backend
