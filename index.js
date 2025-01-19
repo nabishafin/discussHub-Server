@@ -214,7 +214,32 @@ async function run() {
             res.send(result)
         })
 
+        app.get('/users', async (req, res) => {
+            const result = await usersDB.find().toArray();
+            res.send(result)
+        })
 
+
+        // make annouchment
+        app.post('/announcement', async (req, res) => {
+            const anouncementItem = req.body
+            const result = await announcementDB.insertOne(anouncementItem)
+            res.send(result)
+        })
+
+
+        // admin role
+        app.patch("/users/admin/:id", async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) }
+            const updatedDoc = {
+                $set: {
+                    role: 'admin'
+                }
+            }
+            const result = await usersDB.updateOne(filter, updatedDoc)
+            res.send(result)
+        })
 
 
     } catch (error) {
