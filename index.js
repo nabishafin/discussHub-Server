@@ -185,6 +185,22 @@ async function run() {
             }
         });
 
+
+        app.get('/allposts', async (req, res) => {
+            const result = await postsDB.find().toArray();  // Retrieves all posts from the database
+            res.send(result);  // Sends the posts as the response
+        });
+
+
+        app.delete("/posts/:id", async (req, res) => {
+            const id = req.params.id;
+            console.log(id)
+            const query = { _id: new ObjectId(id) };
+            const result = await postsDB.deleteOne(query);
+            res.send(result);
+        });
+
+
     } catch (error) {
         console.error('Error connecting to MongoDB:', error);
         process.exit(1);  // Exit the process if MongoDB connection fails
