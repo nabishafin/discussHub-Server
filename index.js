@@ -30,6 +30,7 @@ async function run() {
         await client.connect();
         postsDB = client.db("DiscussHubDB").collection("posts");
         announcementDB = client.db("DiscussHubDB").collection("announcement");
+        const usersDB = client.db("DiscussHubDB").collection("users");
 
 
         await client.db("admin").command({ ping: 1 });
@@ -199,6 +200,21 @@ async function run() {
             const result = await postsDB.deleteOne(query);
             res.send(result);
         });
+
+
+        // user collection by post methods
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            const query = { email: user.email }
+            const existingUser = await usersDB.findOne(query)
+            if (existingUser) {
+                return res.send({ message: 'user alredy exitets' })
+            }
+            const result = usersDB.insertOne(user)
+            res.send(result)
+        })
+
+
 
 
     } catch (error) {
