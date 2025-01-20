@@ -308,6 +308,36 @@ async function run() {
             res.send(result);
         });
 
+        // Endpoint to get total votes, number of users, and number of comments
+        // Endpoint to get total votes, number of users, number of posts, and number of comments
+        app.get('/stats', async (req, res) => {
+            try {
+                // Total number of posts
+                const totalPosts = await postsDB.countDocuments();
+
+                // Total number of votes (sum of upvotes and downvotes for all posts)
+                const posts = await postsDB.find().toArray();
+                const totalVotes = posts.reduce((acc, post) => acc + post.upvote_count + post.downvote_count, 0);
+
+                // Total number of users
+                const totalUsers = await usersDB.countDocuments();
+
+                // Total number of comments (sum of the length of the comments array for all posts)
+                const totalComments = posts.reduce((acc, post) => acc + (post.comments ? post.comments.length : 0), 0);
+
+                // Send the results as a response
+                res.json({
+                    totalPosts,
+                    totalVotes,
+                    totalUsers,
+                    totalComments
+                });
+            } catch (error) {
+                console.error("Error fetching statistics:", error);
+                res.status(500).send({ error: 'Failed to fetch statistics' });
+            }
+        });
+
 
 
 
@@ -330,3 +360,4 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
