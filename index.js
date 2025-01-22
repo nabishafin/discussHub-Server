@@ -39,7 +39,6 @@ async function run() {
 
 
 
-
         // jwt releted Api
         app.post('/jwt', (req, res) => {
             const user = req.body;
@@ -354,8 +353,6 @@ async function run() {
                 clientSecret: paymentIntent.client_secret
             })
         });
-
-
 
 
     } catch (error) {
