@@ -28,14 +28,14 @@ let postsDB, announcementDB;
 async function run() {
     try {
         // Connect the client to the server
-        await client.connect();
+        // await client.connect();
         postsDB = client.db("DiscussHubDB").collection("posts");
         announcementDB = client.db("DiscussHubDB").collection("announcement");
         const usersDB = client.db("DiscussHubDB").collection("users");
 
 
-        await client.db("admin").command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+        // await client.db("admin").command({ ping: 1 });
+        // console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
 
 
