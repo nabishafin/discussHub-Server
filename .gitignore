@@ -1,3 +1,7 @@
 .vercel
 node_modules
 config.bat
+
+# Environment files (re-added after malware removal)
+.env
+.env.local
